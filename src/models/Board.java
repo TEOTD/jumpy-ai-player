@@ -3,10 +3,28 @@ package models;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents a Jumpy3 game board state and provides move generation logic.
+ * <p>
+ * Handles core game mechanics including:
+ * <ul>
+ *   <li>Parsing board configurations from strings</li>
+ *   <li>Generating valid moves for both players</li>
+ *   <li>Detecting terminal/won states</li>
+ *   <li>Flipping board perspective for Black's moves</li>
+ * </ul>
+ *
+ * <p>Board positions are stored as 16-element list from left(0) to right(15).</p>
+ */
 public class Board {
-
     private final ArrayList<Piece> positions;
 
+    /**
+     * Constructs board from 16-character string representation
+     *
+     * @param positionStr 16-character string using W/w/B/b/x
+     * @throws IllegalArgumentException For invalid strings
+     */
     public Board(String positionStr) {
         this.positions = new ArrayList<>();
         for (char c : positionStr.toCharArray()) {
@@ -14,18 +32,38 @@ public class Board {
         }
     }
 
+    /**
+     * Internal constructor for copy operations
+     */
     private Board(ArrayList<Piece> positions) {
         this.positions = new ArrayList<>(positions);
     }
 
+    /**
+     * @return Current board configuration
+     */
     public ArrayList<Piece> getPositions() {
         return positions;
     }
 
+    /**
+     * Creates a deep copy of the board
+     */
     public Board copy() {
         return new Board(new ArrayList<>(positions));
     }
 
+    /**
+     * Generates all valid White player moves
+     *
+     * @return List of possible next board states with:
+     * <ul>
+     *   <li>Normal moves (single space right)</li>
+     *   <li>Jumps over pieces</li>
+     *   <li>Captures (send jumped Black pieces to rightmost empty)</li>
+     *   <li>King exits (remove from board)</li>
+     * </ul>
+     */
     public List<Board> generateWhiteMoves() {
         List<Board> moves = new ArrayList<>();
         for (int i = 0; i < 16; i++) {
@@ -74,6 +112,15 @@ public class Board {
         return moves;
     }
 
+    /**
+     * Creates mirrored board perspective for Black move generation
+     *
+     * @return Board with:
+     * <ul>
+     *   <li>Positions reversed</li>
+     *   <li>White↔Black pieces swapped</li>
+     * </ul>
+     */
     public Board flip() {
         ArrayList<Piece> flipped = new ArrayList<>(16);
         for (int i = 0; i < 16; i++) {
@@ -99,6 +146,11 @@ public class Board {
         return new Board(flipped);
     }
 
+    /**
+     * Generates Black moves using flipped perspective
+     *
+     * @see #flip()
+     */
     public List<Board> generateBlackMoves() {
         Board flipped = flip();
         List<Board> flippedMoves = flipped.generateWhiteMoves();
@@ -109,26 +161,44 @@ public class Board {
         return originalMoves;
     }
 
+    /**
+     * @return True if White king has exited the board
+     */
     public boolean isWhiteWin() {
-        return positions.stream().noneMatch(piece -> piece == Piece.WHITE_KING);
+        return !positions.contains(Piece.WHITE_KING);
     }
 
+    /**
+     * @return True if Black king has exited the board
+     */
     public boolean isBlackWin() {
-        return positions.stream().noneMatch(piece -> piece == Piece.BLACK_KING);
+        return !positions.contains(Piece.BLACK_KING);
     }
 
+    /**
+     * @return True if either player has won
+     */
     public boolean isTerminal() {
         return isWhiteWin() || isBlackWin();
     }
 
+    /**
+     * @return Current position index of White king (-1 if exited)
+     */
     public int getWhiteKingPosition() {
         return positions.indexOf(Piece.WHITE_KING);
     }
 
+    /**
+     * @return Current position index of Black king (-1 if exited)
+     */
     public int getBlackKingPosition() {
         return positions.indexOf(Piece.BLACK_KING);
     }
 
+    /**
+     * @return 16-character string representation of board state
+     */
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
