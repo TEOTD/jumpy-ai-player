@@ -3,7 +3,7 @@ package models;
 /**
  * Represents the two players in a Jumpy3 game session.
  * <p>
- * Used throughout the system to:
+ * Used throughout the program to:
  * <ul>
  *   <li>Track current turn state</li>
  *   <li>Determine move generation perspective</li>
@@ -36,7 +36,7 @@ public enum Player {
      * Returns the opposing player for turn alternation.
      *
      * @return The opposite player enum value
-     * @Example <pre>
+     * <pre>
      * Player.WHITE.opposite() → BLACK
      * Player.BLACK.opposite() → WHITE
      * </pre>

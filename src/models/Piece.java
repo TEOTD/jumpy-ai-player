@@ -61,10 +61,11 @@ public enum Piece {
      * @param piece Character from board string (case-sensitive)
      * @return Matching Piece enum value
      * @throws IllegalArgumentException For invalid characters
-     * @Example <pre>
-     * Piece.fromChar('W') → WHITE_KING
-     * Piece.fromChar('x') → EMPTY
-     * </pre>
+     *
+     *                                  <pre>
+     *                                  Piece.fromChar('W') → WHITE_KING
+     *                                  Piece.fromChar('x') → EMPTY
+     *                                  </pre>
      */
     public static Piece fromChar(char piece) {
         return Arrays.stream(Piece.values())

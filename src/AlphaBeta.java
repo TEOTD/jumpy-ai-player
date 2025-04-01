@@ -18,7 +18,10 @@ import static models.Utils.validateInputString;
  * Implements Part II of the project: computes White's optimal move using Alpha-Beta pruning.
  * <p>
  * Produces identical estimates to MiniMax but with fewer static evaluations.
- * Usage: Java AlphaBeta [input_file] [output_file] [depth]
+ * Usage: java -cp [output_folder] AlphaBeta [input_file] [output_file] [depth]
+ * </p>
+ * <p>
+ * Example: java -cp bin/ AlphaBeta input.txt output.txt 2
  * </p>
  */
 public class AlphaBeta {
@@ -43,7 +46,7 @@ public class AlphaBeta {
      *   <li>Load and validate board state</li>
      *   <li>Configure Alpha-Beta search with basic estimator</li>
      *   <li>Compute White's optimal move</li>
-     *   <li>Save results</li>
+     *   <li>Save and output results</li>
      * </ol>
      *
      * @param params Requires:
@@ -56,7 +59,7 @@ public class AlphaBeta {
     private static void computeAlphaBeta(Map<String, String> params) throws IOException {
         // Load and validate input
         String inputString = getInputStringFromFile(params.get("inputDir"));
-        validateInputString(inputString);  // Ensures 16-character format compliance
+        validateInputString(inputString);  // Ensures 16-character format and board compliance
 
         // Initialize Alpha-Beta search
         StaticEstimator staticEstimator = new BasicEstimator();

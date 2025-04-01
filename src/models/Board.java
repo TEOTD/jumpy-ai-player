@@ -118,7 +118,7 @@ public class Board {
      * @return Board with:
      * <ul>
      *   <li>Positions reversed</li>
-     *   <li>White↔Black pieces swapped</li>
+     *   <li>White <-> Black pieces swapped</li>
      * </ul>
      */
     public Board flip() {

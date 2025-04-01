@@ -32,7 +32,7 @@ public class MiniMaxAlgorithm {
      * Initiates MiniMax search to find optimal move for specified player
      *
      * @param board  Initial board state
-     * @param depth  Search depth (ply)
+     * @param depth  Search depth (one turn by one player)
      * @param player WHITE (maximizing) or BLACK (minimizing)
      * @return Result containing best move, estimate, and evaluation metrics
      */
@@ -53,7 +53,7 @@ public class MiniMaxAlgorithm {
         // Base case: leaf node or terminal state
         if (depth == 0 || board.isTerminal()) {
             return new Result(
-                    estimator.estimate(board, currentPlayer),
+                    estimator.estimate(board),
                     null, // Best move not tracked at leaves
                     1 // Single position evaluated
             );
@@ -67,7 +67,7 @@ public class MiniMaxAlgorithm {
         // Handle no legal moves situation
         if (moves.isEmpty()) {
             return new Result(
-                    estimator.estimate(board, currentPlayer),
+                    estimator.estimate(board),
                     null,
                     1
             );

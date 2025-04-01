@@ -1,9 +1,9 @@
 package models;
 
-import java.util.ArrayList;
+import static models.Utils.countPiece;
 
 /**
- * Enhanced static estimation function with multi-factor heuristic analysis.
+ * Enhanced static estimation function with multifactor heuristic analysis.
  * <p>
  * Improves upon {@link BasicEstimator} by evaluating:
  * <ul>
@@ -17,37 +17,23 @@ import java.util.ArrayList;
  * <p>Heuristic components from White's perspective:</p>
  * <ol>
  *   <li><b>King Base Value</b>: 3×(WhiteKing + BlackKing - 15)</li>
- *   <li><b>Pawn Position Bonus</b>: ∑(WhitePawn positions) - ∑(15 - BlackPawn positions)</li>
- *   <li><b>Path Analysis</b>: +2×(capturable black pawns - blocking white pawns) ahead of White King</li>
- *   <li><b>Pawn Count</b>: +2×(WhitePawns - BlackPawns)</li>
+ *   <li><b>Pawn Position Bonus</b>: Sum(WhitePawn positions) - Sum(15 - BlackPawn positions)</li>
+ *   <li><b>Path Analysis</b>: 2×(capturable black pawns - blocking white pawns) ahead of White King</li>
+ *   <li><b>Pawn Count</b>: 2×(WhitePawns - BlackPawns)</li>
  *   <li><b>Clear Path</b>: -3 per WhitePawn, +2 per BlackPawn in White King's path</li>
  *   <li><b>King Exit Proximity</b>: +50 if WhiteKing ≥13, -50 if BlackKing ≤2</li>
  * </ol>
  *
- * <p>Note: All evaluations are from White's perspective - the {@code player} parameter
- * is not used in calculations.</p>
+ * <p>Note: All evaluations are from White's perspective</p>
  */
 public class ImprovedEstimator implements StaticEstimator {
-
     /**
-     * Counts occurrences of a specific piece type on the board
+     * Computes board value using enhanced multifactor heuristic
      *
-     * @param positions Board configuration to analyze
-     * @param piece     Target piece type to count
-     * @return Number of matching pieces (0-16)
-     */
-    private int countPawns(ArrayList<Piece> positions, Piece piece) {
-        return (int) positions.stream().filter(p -> p.equals(piece)).count();
-    }
-
-    /**
-     * Computes board value using enhanced multi-factor heuristic
-     *
-     * @param board  Current game state to evaluate
-     * @param player <b>Not used</b> - evaluations always favor White
+     * @param board Current game state to evaluate
      * @return Estimated value with complex weighting. Higher values indicate
      * better positions for White, lower values favor Black.
-     * @Example <pre>
+     * <pre>
      * White King at 12, Black King at 3:
      * Base: 3*(12+3-15) = 0
      * 2 White pawns at 10,11 → 10+11 = 21
@@ -57,7 +43,7 @@ public class ImprovedEstimator implements StaticEstimator {
      * </pre>
      */
     @Override
-    public int estimate(Board board, Player player) {
+    public int estimate(Board board) {
         // Terminal state checks
         if (board.isWhiteWin()) return 100;
         if (board.isBlackWin()) return -100;
@@ -86,8 +72,8 @@ public class ImprovedEstimator implements StaticEstimator {
         estimate += 2 * (capturableBlack - blockingWhite);
 
         // Pawn quantity advantage
-        int whitePawns = countPawns(board.getPositions(), Piece.WHITE_PAWN);
-        int blackPawns = countPawns(board.getPositions(), Piece.BLACK_PAWN);
+        int whitePawns = countPiece(board.getPositions(), Piece.WHITE_PAWN);
+        int blackPawns = countPiece(board.getPositions(), Piece.BLACK_PAWN);
         estimate += 2 * (whitePawns - blackPawns);
 
         // Clear path scoring

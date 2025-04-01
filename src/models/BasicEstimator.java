@@ -16,17 +16,14 @@ package models;
  * retreat left (lower positions). Values increase when White's king progresses
  * or Black's king is pushed back.</p>
  *
- * <p>Note: This implementation does not use the {@code player} parameter -
- * returns absolute values from White's perspective regardless of current player.</p>
+ * <p>returns absolute values from White's perspective regardless of current player.</p>
  */
 public class BasicEstimator implements StaticEstimator {
 
     /**
      * Computes board value using project-specified heuristic rules
      *
-     * @param board  Current game state to evaluate
-     * @param player <b>Not used</b> in this implementation (heuristic remains
-     *               absolute from White's perspective)
+     * @param board Current game state to evaluate
      * @return Estimated value where:
      * <ul>
      *   <li>100 = White victory</li>
@@ -39,7 +36,7 @@ public class BasicEstimator implements StaticEstimator {
      * </pre>
      */
     @Override
-    public int estimate(Board board, Player player) {
+    public int estimate(Board board) {
         // Immediate terminal state checks
         if (board.isWhiteWin()) return 100;
         if (board.isBlackWin()) return -100;

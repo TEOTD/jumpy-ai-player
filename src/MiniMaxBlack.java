@@ -17,7 +17,10 @@ import static models.Utils.validateInputString;
 /**
  * This class implements Part III of the project: computes Black's optimal move using MiniMax algorithm.
  * <p>
- * Usage: MiniMaxBlack [input_file] [output_file] [depth]
+ * Usage: java -cp [output_folder] MiniMaxBlack [input_file] [output_file] [depth]
+ * </p>
+ * <p>
+ * Example: java -cp bin/ MiniMaxBlack input.txt output.txt 2
  * </p>
  */
 public class MiniMaxBlack {
@@ -55,7 +58,7 @@ public class MiniMaxBlack {
     private static void computeMiniMaxBlack(Map<String, String> params) throws IOException {
         // Read and validate input board
         String inputString = getInputStringFromFile(params.get("inputDir"));
-        validateInputString(inputString);  // Ensures valid 16-character board format
+        validateInputString(inputString);  // Ensures 16-character format and board compliance
 
         // Configure MiniMax with basic static estimation
         StaticEstimator staticEstimator = new BasicEstimator();

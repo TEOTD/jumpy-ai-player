@@ -102,12 +102,10 @@ public class JumpyTestSuite {
         System.out.printf("Total tests: %d\nPassed: %d\nFailed: %d\n", total, passed, total - passed);
         System.out.println("\nBreakdown by problem type:");
         for (ProblemType type : ProblemType.values()) {
-            if (type != ProblemType.ALL) {
-                System.out.printf("%-25s: %3d/%d\n",
-                        type,
-                        typeCounts.getOrDefault(type, 0),
-                        TEST_CASES.size());
-            }
+            System.out.printf("%-25s: %3d/%d\n",
+                    type,
+                    typeCounts.getOrDefault(type, 0),
+                    TEST_CASES.size());
         }
 
         if (passed < total) System.exit(1);

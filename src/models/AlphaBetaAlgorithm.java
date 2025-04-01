@@ -11,7 +11,7 @@ import java.util.List;
  *
  * <p>Key features:</p>
  * <ul>
- *   <li>Depth-limited search with configurable ply</li>
+ *   <li>Depth-limited search with configurable one turn by one</li>
  *   <li>Alpha-beta window pruning</li>
  *   <li>Player-specific move generation</li>
  *   <li>Terminal state detection</li>
@@ -33,7 +33,7 @@ public class AlphaBetaAlgorithm {
      * Initiates Alpha-Beta search to find optimal move for specified player
      *
      * @param board  Initial board state
-     * @param depth  Search depth (ply)
+     * @param depth  Search depth
      * @param player WHITE (maximizing) or BLACK (minimizing)
      * @return Result containing best move, estimate, and evaluation metrics
      */
@@ -64,7 +64,7 @@ public class AlphaBetaAlgorithm {
         // Base case: leaf node or terminal state
         if (depth == 0 || board.isTerminal()) {
             return new Result(
-                    estimator.estimate(board, currentPlayer),
+                    estimator.estimate(board),
                     null,  // No move tracking at leaves
                     1  // Single position evaluated
             );
@@ -78,7 +78,7 @@ public class AlphaBetaAlgorithm {
         // Handle no legal moves situation
         if (moves.isEmpty()) {
             return new Result(
-                    estimator.estimate(board, currentPlayer),
+                    estimator.estimate(board),
                     null,
                     1
             );

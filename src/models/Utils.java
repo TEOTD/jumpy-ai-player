@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -38,7 +39,7 @@ public class Utils {
             map.put("outputDir", args[1]);
             map.put("depth", args[2]);
         } else {
-            // Interactive mode for development/testing
+            // Interactive mode
             Scanner scanner = new Scanner(System.in);
             System.out.println("Enter input (e.g., MiniMax board1.txt board2.txt 2):");
             String[] tokens = scanner.nextLine().split(" ");
@@ -127,11 +128,21 @@ public class Utils {
      * @return Number of occurrences (0-16)
      */
     private static int countPiece(String inputOneString, Piece piece) {
-        int count = 0;
+        ArrayList<Piece> pieces = new ArrayList<>();
         for (char c : inputOneString.toCharArray()) {
-            if (c == piece.getPiece())
-                count++;
+            pieces.add(Piece.fromChar(c));
         }
-        return count;
+        return countPiece(pieces, piece);
+    }
+
+    /**
+     * Counts occurrences of a specific piece type on the board
+     *
+     * @param positions Board configuration to analyze
+     * @param piece     Target piece type to count
+     * @return Number of matching pieces (0-16)
+     */
+    public static int countPiece(ArrayList<Piece> positions, Piece piece) {
+        return (int) positions.stream().filter(p -> p.equals(piece)).count();
     }
 }

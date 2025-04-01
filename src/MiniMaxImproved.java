@@ -18,7 +18,10 @@ import static models.Utils.validateInputString;
  * Implements Part IV of the project: MiniMax with an enhanced static estimation function.
  * <p>
  * Uses custom heuristic rules to improve move selection compared to the basic estimator.
- * Usage: MiniMaxImproved [input_file] [output_file] [depth]
+ * Usage: java -cp [output_folder] MiniMaxImproved [input_file] [output_file] [depth]
+ * </p>
+ * <p>
+ * Example: java -cp bin/ MiniMaxImproved input.txt output.txt 2
  * </p>
  */
 public class MiniMaxImproved {
@@ -42,7 +45,7 @@ public class MiniMaxImproved {
      * <ol>
      *   <li>Load and validate board state</li>
      *   <li>Use improved static estimation function</li>
-     *   <li>Compute White's optimal move with MiniMax</li>
+     *   <li>Compute White's optimal move with MiniMax with improved estimation function</li>
      *   <li>Save results with improved evaluation metrics</li>
      * </ol>
      *
@@ -56,7 +59,7 @@ public class MiniMaxImproved {
     private static void computeMiniMaxImproved(Map<String, String> params) throws IOException {
         // Load and validate input
         String inputString = getInputStringFromFile(params.get("inputDir"));
-        validateInputString(inputString);  // Ensures valid 16-character board format
+        validateInputString(inputString);
 
         // Initialize MiniMax with IMPROVED static estimation
         StaticEstimator staticEstimator = new ImprovedEstimator();  // Key difference from original MiniMax

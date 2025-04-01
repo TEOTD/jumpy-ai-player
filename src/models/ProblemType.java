@@ -3,7 +3,7 @@ package models;
 import java.util.Arrays;
 
 /**
- * Represents different algorithm variants supported by the system.
+ * Represents different algorithm variants supported by the program.
  * <p>
  * Used to categorize computation results and configure output formatting.
  * Each type corresponds to a specific program implementation:
@@ -16,10 +16,6 @@ import java.util.Arrays;
  * </p>
  */
 public enum ProblemType {
-    /**
-     * Special value indicating all types (unused in current implementation)
-     */
-    ALL("All"),
 
     /**
      * Basic MiniMax algorithm implementation for White player moves
@@ -58,7 +54,7 @@ public enum ProblemType {
      * @param name Case-sensitive display name (e.g., "MiniMaxImproved")
      * @return Matching ProblemType enum value
      * @throws IllegalArgumentException If no matching type exists
-     * @Example {@code ProblemType.fromName("AlphaBeta") → ALPHA_BETA}
+     *                                  <p>ProblemType.fromName("AlphaBeta") → ALPHA_BETA</p>
      */
     public static ProblemType fromName(String name) {
         return Arrays.stream(ProblemType.values())

@@ -20,7 +20,10 @@ import static models.Utils.validateInputString;
  * move up to a specified depth, and writes the resulting board position to an output file.
  * The evaluation metrics is printed on the console.
  * <p>
- * Usage: Java MiniMax [input_file] [output_file] [depth]
+ * Usage: java -cp [output_folder] MiniMax [input_file] [output_file] [depth]
+ * </p>
+ * <p>
+ * Example: java -cp bin/ MiniMax input.txt output.txt 2
  * </p>
  */
 public class MiniMax {
