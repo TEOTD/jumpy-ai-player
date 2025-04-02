@@ -8,11 +8,12 @@ An implementation of MiniMax and Alpha-Beta algorithms with static estimation fo
 
 1. [Implementation Details](#implementation-details)
 2. [Setup & Execution](#setup--execution)
-3. [Jumpy Test Suite Setup and Usage](#jumpy-test-suite-setup-and-usage)
-4. [Example Comparisons (Basic vs Improved)](#example-comparisons-basic-vs-improved)
-5. [Why the Improved Estimator is Better](#why-the-improved-estimator-is-better)
-6. [Example Comparisons (MiniMax vs AlphaBeta)](#example-comparisons-minimax-vs-alphabeta)
-7. [Example Cases](#example-cases)
+3. [Javadocs Generation Procedure](#javadocs-generation-procedure)
+4. [Jumpy Test Suite Setup and Usage](#jumpy-test-suite-setup-and-usage)
+5. [Example Comparisons (Basic vs Improved)](#example-comparisons-basic-vs-improved)
+6. [Why the Improved Estimator is Better](#why-the-improved-estimator-is-better-)
+7. [Example Comparisons (MiniMax vs AlphaBeta)](#example-comparisons-minimax-vs-alphabeta)
+8. [Example Cases](#example-cases)
 
 ---
 
@@ -68,6 +69,26 @@ java -cp bin/ AlphaBeta input.txt output.txt <depth>
 java -cp bin/ MiniMaxBlack input.txt output.txt <depth>
 java -cp bin/ MiniMaxImproved input.txt output.txt <depth>
 ```
+
+---
+
+## Javadocs Generation Procedure
+
+The code in this project is well-documented, with Javadocs provided for all key classes, interfaces, and methods. These
+Javadocs explain the purpose, parameters, return values, and usage of various components, making it easier for
+developers to understand the design and functionality of the project.
+
+### Generating Javadocs
+
+To generate the Javadocs for the project, you can run the following command:
+
+```bash
+# Execute to generate java docs
+javadoc -d docs -sourcepath src -subpackages models src/*.java -private
+```
+
+Once the Javadocs are generated, you can open the ```index.html``` file located in the docs folder in a browser to view
+the full documentation.
 
 ---
 
