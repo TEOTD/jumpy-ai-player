@@ -50,11 +50,20 @@ public class MiniMaxAlgorithm {
      * @return Best result for current search subtree
      */
     private Result minimax(Board board, int depth, boolean isMaximizing, Player currentPlayer) {
-        // Base case: leaf node or terminal state
-        if (depth == 0 || board.isTerminal()) {
+        // Base case: leaf node
+        if (depth == 0) {
             return new Result(
                     estimator.estimate(board),
                     null, // Best move not tracked at leaves
+                    1 // Single position evaluated
+            );
+        }
+
+        // Base case: terminal case
+        if (board.isTerminal()) {
+            return new Result(
+                    estimator.estimate(board),
+                    board, // Existing board is the best board
                     1 // Single position evaluated
             );
         }
@@ -90,12 +99,12 @@ public class MiniMaxAlgorithm {
 
             // Update best value and move
             if (isMaximizing) {
-                if (result.getEstimate() > bestEstimate) {
+                if (result.getEstimate() >= bestEstimate) {
                     bestEstimate = result.getEstimate();
                     bestBoard = move;
                 }
             } else {
-                if (result.getEstimate() < bestEstimate) {
+                if (result.getEstimate() <= bestEstimate) {
                     bestEstimate = result.getEstimate();
                     bestBoard = move;
                 }

@@ -62,11 +62,20 @@ public class AlphaBetaAlgorithm {
     private Result alphaBeta(Board board, int depth, int alpha, int beta,
                              boolean isMaximizing, Player currentPlayer) {
         // Base case: leaf node or terminal state
-        if (depth == 0 || board.isTerminal()) {
+        if (depth == 0) {
             return new Result(
                     estimator.estimate(board),
                     null,  // No move tracking at leaves
                     1  // Single position evaluated
+            );
+        }
+
+        // Base case: terminal case
+        if (board.isTerminal()) {
+            return new Result(
+                    estimator.estimate(board),
+                    board, // Existing board is the best board
+                    1 // Single position evaluated
             );
         }
 
@@ -105,13 +114,13 @@ public class AlphaBetaAlgorithm {
 
             // Update best value and move
             if (isMaximizing) {
-                if (result.getEstimate() > bestEstimate) {
+                if (result.getEstimate() >= bestEstimate) {
                     bestEstimate = result.getEstimate();
                     bestBoard = move;
                 }
                 alpha = Math.max(alpha, bestEstimate);
             } else {
-                if (result.getEstimate() < bestEstimate) {
+                if (result.getEstimate() <= bestEstimate) {
                     bestEstimate = result.getEstimate();
                     bestBoard = move;
                 }
